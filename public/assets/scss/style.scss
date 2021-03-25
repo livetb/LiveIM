@@ -237,7 +237,8 @@ html, body {
     }
     .button-wrap {
       padding: 5px 15px;
-      text-align: right;
+      display: flex;
+      justify-content: flex-end;
       .button {
         border-radius: 5px;
         height: 40px;
@@ -254,9 +255,9 @@ html, body {
           outline: none;
           border: none;
         }
-        & + .button {
-          margin-left: 20px;
-        }
+      }
+      & > * + * {
+        margin-left: 20px;
       }
       label {
         display: inline-block;

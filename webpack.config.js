@@ -28,11 +28,11 @@ return {
             })
         ],
     },
-    externals: {
-        firebase: 'firebase',
-        axios: 'axios',
-        Stripe: 'Stripe'
-    },
+    // externals: {
+    //     firebase: 'firebase',
+    //     axios: 'axios',
+    //     Stripe: 'Stripe'
+    // },
     entry: {
         index: path.resolve(__dirname, `${PATH.SRC}/pages/index/index.js`),
     },

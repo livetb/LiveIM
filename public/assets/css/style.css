@@ -274,7 +274,8 @@ html, body {
 
 .chat-room .send-message-wrap .button-wrap {
   padding: 5px 15px;
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .chat-room .send-message-wrap .button-wrap .button {
@@ -296,7 +297,7 @@ html, body {
   border: none;
 }
 
-.chat-room .send-message-wrap .button-wrap .button + .button {
+.chat-room .send-message-wrap .button-wrap > * + * {
   margin-left: 20px;
 }
 

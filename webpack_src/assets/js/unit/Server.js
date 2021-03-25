@@ -33,7 +33,7 @@ class ServerUnit {
    * @returns { Promise<{ status: Number, data: UserInfo[]}> }
    */
   getMessageUserList( param = {"query":{},"pageSize":20,"pageNum":1} ){
-    return axios.post('/api2/message/user/list', param);
+    return axios.post('/api2/message/user/list/', param);
   }
 
   /**
@@ -41,7 +41,7 @@ class ServerUnit {
    * @returns { Promise<{ status: Number, data: Message[]}> }
    */
   getUserMessageDetail( param = {"query":{"relateUid":3901604053073969},"pageSize":20,"pageNum":1}){
-    return axios.post('/api2/message/user/detail', param);
+    return axios.post('/api2/message/user/detail/', param);
   }
 
   /**
@@ -52,7 +52,7 @@ class ServerUnit {
    */
   sendMessage(relateUid, content, messageType = 0) {
     let param = { relateUid, content, messageType};
-    return axios.post('/api/message/send', param);
+    return axios.post('/api/message/send/', param);
   }
 
   /**
@@ -64,7 +64,7 @@ class ServerUnit {
    */
   sendMediaMessage(filename, relateUid, messageType) {
     let param = { filename, relateUid, messageType};
-    return axios.post('/api/uploadMedia');
+    return axios.post('/api/uploadMedia/');
   }
 }
 
