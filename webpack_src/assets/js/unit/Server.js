@@ -5,7 +5,7 @@ import { UserInfo } from '../bean/UserInfo.js';
 const is_test = true;
 
 const config = {
-  baseURL: is_test ? 'https://t.livego.live' : 'https://t.livego.live'
+  baseURL: is_test ? 'https://t.livehub.cloud' : 'https://t.livehub.cloud'
 }
 
 axios.defaults.baseURL = config.baseURL;
