@@ -1,7 +1,12 @@
+if (typeof Promise !== 'function') {
+  alert('Your Browser Not Support Promise.')
+}
+
 import { UserList } from '../../components/UserList';
 import { ChatRoom } from '../../components/ChatRoom';
 import { Server } from '../../assets/js/unit/Server';
 import { UserInfo } from '../../assets/js/bean/UserInfo';
+// import { ObjectUnit } from '../../assets/js/unit/ObjectUnit';
 
 const user_list_arr = [
   {
@@ -82,6 +87,15 @@ class ThePage {
       this.userList.appendUser(user);
       this.UserInfoMap.set(user.uid, user);
     });
+    let usp = new URLSearchParams(location.search);
+    if (usp.get('timer') === 'on') {
+      let sec = ~~usp.get('sec');
+      let duration = sec > 0 ? sec * 1000 : 10 * 1000;
+      console.log('Start Timer: ', { duration });
+      setTimeout(() => {
+        this.getMessageUserList();
+      }, duration);
+    }
   }
 
   bindListener(){
