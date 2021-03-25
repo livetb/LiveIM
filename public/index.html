@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Livetube</title>
+  <link rel="shortcut icon" type="image/icon" href="./favicon.ico">
+  <script>
+    function loadCss(suffix){
+      const arr = [
+        "./assets/css/style.min.css",
+      ]
+      const linkHTML = new Array();
+      for(let i=0; i<arr.length; i++){
+        linkHTML.push(`<link rel="stylesheet" href="${arr[i]}${suffix ? "?"+suffix : ""}" />`);
+      }
+      document.write(linkHTML.join(""));
+    }
+    loadCss(Math.random());
+    // loadCss("0218");
+  </script>
+</head>
+
+<body>
+
+  <!-- https://sw.cool3c.com/user/99588/2018/7f8bb260-943c-4b9d-b58b-4ed782c8761a.jpg -->
+
+  <div id="chat_block" class="first content-block">
+    <!-- <div class="user-list">
+      <label class="user-wrap">
+        <input type="radio" name="list-user" >
+        <div class="user">
+          <div class="avatar-wrap">
+            <div class="rectangle-box square">
+              <div class="avatar no1">
+                <img src="https://sw.cool3c.com/user/99588/2018/7f8bb260-943c-4b9d-b58b-4ed782c8761a.jpg?fit=max&w=800&q=80" />
+              </div>
+              <div class="badge no2">·</div>
+            </div>
+          </div>
+          <div class="message-wrap">
+            <h2 class="name">User - Zhang San</h2>
+            <p class="last-message">Hello, The World. Xxx xx x x x x xxxxxxxxxx.</p>
+          </div>
+        </div>
+      </label>
+    </div> -->
+
+    <!--  -->
+
+    <!-- <div id="chat_room" class="chat-room">
+      <div class="chat-record-list">
+        <div class="chat-record">
+          <div class="avatar-wrap">
+            <div class="rectangle-box square">
+              <div class="avatar no1">
+                <img src="https://sw.cool3c.com/user/99588/2018/7f8bb260-943c-4b9d-b58b-4ed782c8761a.jpg?fit=max&w=800&q=80" />
+              </div>
+            </div>
+          </div>
+          <div class="message-wrap">
+            <div class="info">
+              <p class="item">2021-10-01 12:00:00</p>
+            </div>
+            <div class="message">
+              <p class="content text">Hello The World.</p>
+            </div>
+          </div>
+        </div>
+        <div class="chat-record self">
+          <div class="avatar-wrap">
+            <div class="rectangle-box square">
+              <div class="avatar no1">
+                <img src="https://sw.cool3c.com/user/99588/2018/7f8bb260-943c-4b9d-b58b-4ed782c8761a.jpg?fit=max&w=800&q=80" />
+              </div>
+            </div>
+          </div>
+          <div class="message-wrap">
+            <div class="info">
+              <p class="item">2021-10-01 12:00:00</p>
+            </div>
+            <div class="message">
+              <img class="content image" src="https://sw.cool3c.com/user/99588/2018/7f8bb260-943c-4b9d-b58b-4ed782c8761a.jpg?fit=max&w=800&q=80" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="send-message-wrap">
+        <div class="input-wrap">
+          <textarea class="text-input"></textarea>
+        </div>
+        <div class="button-wrap">
+          <label class="file-label">
+            <input type="file"/>
+            <button class="button choose-file">Choose Image</button>
+          </label>
+          <button class="button send-message">Send Message</button>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  
+  <!-- firebase -->
+  <!-- <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase.js"></script> -->
+  <!-- axios -->
+  <script src="https://unpkg.com/axios@0.21.1/dist/axios.min.js"></script>
+  <!-- custom -->
+  <script src="./dist/index.bundle.js"></script>
+</body>
+</html>
