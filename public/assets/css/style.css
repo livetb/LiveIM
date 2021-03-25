@@ -18,7 +18,7 @@ html, body {
 }
 
 .content-block.first {
-  margin-top: 5vh;
+  margin-top: 30px;
   display: grid;
   grid-template-columns: 300px auto;
   grid-template-rows: 90vh;
@@ -155,6 +155,20 @@ html, body {
   overflow: hidden;
 }
 
+.chat-room .user-profile-wrap {
+  border-bottom: 1px solid #000;
+}
+
+.chat-room .user-profile-wrap > * {
+  margin: 0;
+  display: inline-block;
+  padding: 10px;
+}
+
+.chat-room .user-profile-wrap > * + * {
+  border-left: 1px solid #000;
+}
+
 .chat-room .chat-record-list {
   flex: 1;
   overflow-y: scroll;
@@ -238,10 +252,8 @@ html, body {
 }
 
 .chat-room .fast-message-list-wrap {
-  display: none;
-  height: 100px;
-  max-height: 100px;
-  overflow: hidden;
+  height: 120px;
+  max-height: 120px;
 }
 
 .chat-room .fast-message-list-wrap input[type='checkbox'] {
@@ -277,12 +289,13 @@ html, body {
 }
 
 .chat-room .fast-message-list-wrap .fast-message-list {
-  height: 80px;
-  max-height: 80px;
+  height: 100px;
+  max-height: 100px;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   border-top: 1px solid #000;
+  overflow-y: scroll;
 }
 
 .chat-room .fast-message-list-wrap .fast-message-list .text-list {
@@ -291,12 +304,20 @@ html, body {
 
 .chat-room .fast-message-list-wrap .fast-message-list .text-list > .item {
   margin: 0;
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 18px;
+  line-height: 30px;
+  padding-left: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+  white-space: pre-line;
+  cursor: pointer;
 }
 
 .chat-room .fast-message-list-wrap .fast-message-list .image-list {
   padding: 5px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
 }
 
 .chat-room .fast-message-list-wrap .fast-message-list .image-list > img.item {
@@ -304,8 +325,7 @@ html, body {
   object-fit: cover;
   max-width: 100%;
   transition: all 0.4s ease-in-out;
-  display: grid;
-  grid-template-columns: repeat();
+  cursor: pointer;
 }
 
 .chat-room .fast-message-list-wrap .fast-message-list .image-list > img.item:hover {

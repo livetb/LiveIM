@@ -34,20 +34,31 @@ class FastMessageList {
     let that = this;
     this.config.text_list.addEventListener('click', function(event){
       let target = event.target;
-      console.log('fast: ', target);
       that.notifyListener('select_message', {
         created_time: Date.now(),
-          data: 'Hello World',
+          data: target.innerText,
           type: 0
-      })
+      });
+    });
+    this.config.image_list.addEventListener('click', function(event){
+      let target = event.target;
+      if(!target.classList.contains('item')) return;
+      that.notifyListener('select_message', {
+        created_time: Date.now(),
+          data: target.getAttribute('src'),
+          type: 2
+      });
     });
   }
 
   fastTextList(){
     let arr = [
       'Hello there, how may I help you?',
-      'Second.',
-      'Third.'
+      `Hello there, please let me know if you have any problems while using the app. I am always here to help. :)
+
+      Best,
+      Emily`,
+      'Thanks.',
     ];
     let listHTML = [];
     arr.forEach( text => {
@@ -59,8 +70,6 @@ class FastMessageList {
   fastImageList(){
     let arr = [
       'https://storage.googleapis.com/livehub-xyz/Livetube_undefined_20210325104955_cover.jpeg',
-      'https://storage.googleapis.com/livehub-xyz/Livetube_undefined_20210325104955_cover.jpeg',
-      'https://storage.googleapis.com/livehub-xyz/Livetube_undefined_20210325104955_cover.jpeg'
     ];
     let listHTML = [];
     arr.forEach( text => {
@@ -79,7 +88,7 @@ class FastMessageList {
     config.ele = ele;
     ele.innerHTML = `
     <input type="checkbox" />
-    <p class="switch"></p>
+    <p class="switch hide-ele"></p>
     <div class="fast-message-list">
       <div class="text-list">
         ${this.fastTextList()}

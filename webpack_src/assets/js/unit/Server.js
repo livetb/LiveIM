@@ -66,6 +66,14 @@ class ServerUnit {
     let param = { filename, relateUid, messageType};
     return axios.post('/api/uploadMedia/');
   }
+
+  /**
+   * @param { String } uid
+   * @returns { Promise<{ status: Number, data: { uid: String, createdAt: String, diamond: Number}}> }
+   */
+  getUserProfile( uid ){
+    return axios.post('/api/user/info/', { relateUid: uid });
+  }
 }
 
 const Server = new ServerUnit();

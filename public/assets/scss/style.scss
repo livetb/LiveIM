@@ -15,7 +15,7 @@ html, body {
   max-width: 1200px;
   margin: auto;
   &.first {
-    margin-top: 5vh;
+    margin-top: 30px;
     display: grid;
     grid-template-columns: 300px auto;
     grid-template-rows: 90vh;
@@ -132,12 +132,24 @@ html, body {
   }
 }
 
-// chat-room 消息列表、快捷消息、发送消息
+// chat-room 用户资料、 消息列表、快捷消息、发送消息
 .chat-room {
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+  .user-profile-wrap {
+    border-bottom: 1px solid #000;
+    & > * {
+      margin: 0;
+      display: inline-block;
+      padding: 10px;
+      & + * {
+        border-left: 1px solid #000;
+      }
+    }
+  }
+
   // 消息列表
   .chat-record-list {
     flex: 1;
@@ -208,10 +220,9 @@ html, body {
   }
   // 快捷消息
   .fast-message-list-wrap {
-    display: none;
-    height: 100px;
-    max-height: 100px;
-    overflow: hidden;
+    height: 120px;
+    max-height: 120px;
+    // overflow: hidden;
     input[type='checkbox'] {
       display: none;
       & + .switch {
@@ -240,30 +251,38 @@ html, body {
       }
     }
     .fast-message-list {
-      height: 80px;
-      max-height: 80px;
+      height: 100px;
+      max-height: 100px;
       width: 100%;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       border-top: 1px solid #000;
+      overflow-y: scroll;
       .text-list {
         & > .item {
           margin: 0;
-          font-size: 16px;
-          line-height: 20px;
+          font-size: 18px;
+          line-height: 30px;
+          padding-left: 10px;
+          font-weight: bold;
+          border-bottom: 1px solid #000;
+          white-space: pre-line;
+          cursor: pointer;
         }
         border-right: 1px solid #000;
 
       }
       .image-list {
         padding: 5px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 10px;
         & > img.item {
           width: 100%;
           object-fit: cover;
           max-width: 100%;
           transition: all 0.4s ease-in-out;
-          display: grid;
-          grid-template-columns: repeat();
+          cursor: pointer;
           &:hover {
             transform: scale(1.5);
             object-fit: contain;

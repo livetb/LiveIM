@@ -65,6 +65,7 @@ class ChatRecordList {
     if(!Array.isArray(message)) message = [message];
     message.forEach( msg => {
       if (!msg.id) msg.id = this.config.send_message_id++;
+      if (this.MessageMap.has(msg.id)) return;
       let cur_user_info = { is_self: false, avatar: user_info.avatar };
       if (msg.fromUid !== this.uid) {
         // console.log('No same uid: ', { from: message.fromUid, self: this.uid});
@@ -75,7 +76,7 @@ class ChatRecordList {
       let ele = message_ele.getElement();
       let status = cur_user_info.is_self ? 'pending' : 'success'
       ele.classList.add(status);
-      this.MessageMap.set(message.id, { status: 'pending', message: msg, ele: ele });
+      this.MessageMap.set(msg.id, { status: 'pending', message: msg, ele: ele });
       this.config.ele.appendChild(ele);
     });
   }
