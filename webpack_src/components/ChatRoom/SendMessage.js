@@ -72,6 +72,19 @@ class SendMessage {
   bindListener(){
     let config = this.config;
     let that = this;
+    //
+    config.text_input.addEventListener('keypress', function(event){
+      // console.log('key: ', event.key);
+      if(event.key.toLowerCase() === 'enter') {
+        let text = this.value;
+        // console.log('send text: ', text);
+        that.notifyListener('send_text', {
+          created_time: Date.now(),
+          data: text
+        });
+        that.config.text_input.value = '';
+      }
+    });
     // 
     config.button.send_text.addEventListener('click', () => {
       let text = this.config.text_input.value;

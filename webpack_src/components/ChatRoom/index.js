@@ -1,7 +1,8 @@
 import { SendMessage } from './SendMessage.js';
 import { ChatRecordList } from './ChatRecordList.js';
+import { FastMessageList } from '../FastMessageList/';
 import { Server } from '../../assets/js/unit/Server.js';
-
+import { DefaultConfig } from '../../assets/js/common';
 import { UserInfo } from '../../assets/js/bean/UserInfo.js';
 
 class ChatRoom {
@@ -34,9 +35,12 @@ class ChatRoom {
   curChatRecordList
   /**@type { SendMessage } */
   sendMessage;
+  /**@type { FastMessageList } */
+  fastMessageList;
 
   constructor(){
     this.sendMessage = new SendMessage();
+    this.fastMessageList = new FastMessageList();
     this.init();
   }
 
@@ -50,12 +54,13 @@ class ChatRoom {
     let ele = document.createElement('div');
     ele.classList.add(...this.config.classList);
     this.config.ele = ele;
+    ele.appendChild(this.fastMessageList.getElement());
     ele.appendChild(this.sendMessage.getElement());
     this.already.init.view = true;
   }
 
   bindListener(){
-    let default_avatar = 'https://sw.cool3c.com//99588/2018/7f8bb260-943c-4b9d-b58b-4ed782c8761a.jpg?fit=max&w=800&q=80';
+    let default_avatar = DefaultConfig.avatar;
     this.sendMessage.setListener('send_text', (param) => {
       if (!this.curChatRecordList?.uid) return;
       Server.sendMessage(this.curChatRecordList.uid, param.data, 0);
@@ -72,6 +77,15 @@ class ChatRoom {
         timestamp: param.created_time,
         message: URL.createObjectURL(param.data),
         messageType: 2
+      }, { is_self: true, avatar: default_avatar});
+    });
+    // fast message list
+    this.fastMessageList.setListener('select_message', (param) => {
+      let { created_time, data, type } = param;
+      this.curChatRecordList.appendRecord({
+        timestamp: created_time,
+        message: data,
+        messageType: type
       }, { is_self: true, avatar: default_avatar});
     });
   }
@@ -91,7 +105,7 @@ class ChatRoom {
     let curChatRecordList = this.RecordListMap.get(uid)?.list;
     if( !curChatRecordList ) {
       curChatRecordList = new ChatRecordList(uid);
-      this.config.ele.insertBefore(curChatRecordList.getElement(), this.sendMessage.getElement());
+      this.config.ele.insertBefore(curChatRecordList.getElement(), this.fastMessageList.getElement());
       this.RecordListMap.set(uid, {
         list: curChatRecordList
       });

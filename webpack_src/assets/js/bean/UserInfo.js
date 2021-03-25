@@ -6,6 +6,7 @@ class UserInfo {
   /**@type { Number } */ gender;
   /**@type { String } */ age;
   /**@type { String } */ lastMessage;
+  /**@type { Number } */ updateBadge;
 
   constructor(id, uid, nickname, avatar, gender, age, lastMessage){
     this.id = id;

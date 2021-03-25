@@ -71,12 +71,11 @@ class UserList {
           user: user
         });
       });
-      cur.user_wrap.updateBadge(1);
+      cur.user_wrap.updateBadge(user.unReadCount);
       this.config.ele.appendChild(cur.user_wrap.getElement());
       this.UserMap.set(user.uid, cur);
     }
     cur.updated_time = Date.now();
-    if(cur.user.lastMessage !== user.lastMessage) cur.user_wrap.updateBadge(1);
     cur.user = user;
     if (this.UserMap.size === 1) {
       cur.user_wrap.checked();
