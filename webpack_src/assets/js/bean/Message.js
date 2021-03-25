@@ -9,6 +9,9 @@ class Message {
   message
   /**@type { Number } */
   messageType;
+  /**@type { String } */
+  fromUid;
+  
   /**@type { { is_self: Boolean, avatar: avatar } } */
   user_info = {
     is_self: null,

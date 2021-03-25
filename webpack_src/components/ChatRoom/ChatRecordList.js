@@ -1,4 +1,5 @@
 import { Message } from '../../assets/js/bean/Message.js';
+import { DefaultConfig } from '../../assets/js/common';
 
 class ChatRecordList {
   /**
@@ -60,13 +61,19 @@ class ChatRecordList {
    */
   appendRecord( message, user_info ) {
     if (user_info.is_self) console.log(`send message to: ${this.uid}: `, message);
-    // console.log('appendRecord: ', { message, user_info });
+    console.log('appendRecord: ', { message, user_info });
     if(!Array.isArray(message)) message = [message];
     message.forEach( msg => {
       if (!msg.id) msg.id = this.config.send_message_id++;
-      let message_ele = new Message( msg, user_info);
+      let cur_user_info = { is_self: false, avatar: user_info.avatar };
+      if (msg.fromUid !== this.uid) {
+        // console.log('No same uid: ', { from: message.fromUid, self: this.uid});
+        cur_user_info.is_self = true;
+        cur_user_info.avatar = DefaultConfig.avatar;
+      } 
+      let message_ele = new Message( msg, cur_user_info);
       let ele = message_ele.getElement();
-      let status = user_info.is_self ? 'pending' : 'success'
+      let status = cur_user_info.is_self ? 'pending' : 'success'
       ele.classList.add(status);
       this.MessageMap.set(message.id, { status: 'pending', message: msg, ele: ele });
       this.config.ele.appendChild(ele);
