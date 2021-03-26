@@ -63,6 +63,12 @@ class FastMessageList {
       'Your account would be deleted in 10 minutes. Please do not login again, your account would be reactivated.',
       'All our users are verified. If you think someone is fake, you could make a report. You may click the button on the top right corner to block a specific person and he/she would not show on your profile anymore.',
       'You may swipe to match with the person you like and then send them messages for free. You could even video call them privately. Hope you enjoy it!',
+      'Sorry it is not location based app, we provide wordwide users for matching.',
+      `Sorry, I m here to work solving users' problems only :)`,
+      'You may buy diamonds in the wallet.',
+      `Hello, I am Emily, anything can help?
+
+      :)`,
     ];
     let listHTML = [];
     arr.forEach( text => {
