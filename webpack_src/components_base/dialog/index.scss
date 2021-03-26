@@ -1,0 +1,124 @@
+.forbid-body {
+  max-height: 100vh;
+  overflow: hidden;
+  &.scroll {
+    padding-right: 16px;
+  }
+}
+@media screen and (max-width: 500px ) {
+  .forbid-body.scroll {
+    padding-right: 0;
+  }
+}
+$duration: 0.3s;
+@keyframes CusDialogFadeIn {
+  0% { background: rgba(0, 0, 0, 0); backdrop-filter: blur(0);}
+  100% { background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(3);}
+}
+@keyframes CusDialogFadeOut {
+  0% { background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(3);}
+  100% { background: rgba(0, 0, 0, 0); backdrop-filter: blur(0);}
+}
+@keyframes CusDialogContentFadeIn {
+  0% {
+		bottom: 50px;
+		opacity: 0.01;
+	}
+  100% {
+		bottom: 0;
+		opacity: 1;
+  }
+}
+@keyframes CusDialogContentFadeOut {
+  0% {
+		bottom: 0;
+		opacity: 1;
+  }
+  100% {
+		bottom: 50px;
+		opacity: 0.01;
+	}
+}
+.cus-dialog {
+  display: none;
+  &.default {
+    background: rgba($color: #000000, $alpha: 0.3);
+    backdrop-filter: blur(5px);
+  }
+  &.show {
+    display: flex;
+    &.default {
+      animation-name: CusDialogFadeIn;
+      animation-duration: $duration;
+      animation-iteration-count: 1;
+      animation-timing-function: ease-in-out;
+      animation-fill-mode: forwards;
+      & > .content {
+        animation-name: CusDialogContentFadeIn;
+        animation-duration: $duration;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+      }
+    }
+	}
+	&.hide {
+    display: flex;
+    &.default {
+      animation-name: CusDialogFadeOut;
+      animation-duration: $duration;
+      animation-iteration-count: 1;
+      animation-timing-function: ease-in-out;
+      animation-fill-mode: forwards;
+      & > .content {
+        animation-name: CusDialogContentFadeOut;
+        animation-duration: $duration;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+      }
+    }
+	}
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  & > .content {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    // overflow: hidden;
+    & * {
+      word-break: break-word;
+    }
+    &.default {
+      max-height: 90%;
+      max-width: 90%;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      & > *:not(.default-close) + *:not(.default-close) {
+        margin: 20px 0 0 0;
+      }
+    }
+    .default-close {
+      position: absolute;
+      z-index: 1;
+      right: 5px;
+      top: 5px;
+      display: flex;
+      width: 30px;
+      height: 30px;
+      padding: 7px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: rgb(233, 233, 233);
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

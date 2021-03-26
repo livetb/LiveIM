@@ -70,6 +70,9 @@ class FastMessageList {
   fastImageList(){
     let arr = [
       'https://storage.googleapis.com/livehub-xyz/Livetube_undefined_20210325104955_cover.jpeg',
+      'https://storage.googleapis.com/livehub-xyz/Livetube_undefined_20210326020742_cover.jpeg',
+      'https://storage.googleapis.com/livehub-xyz/Livetube_undefined_20210326020846_cover.jpeg',
+      'https://storage.googleapis.com/livehub-xyz/Livetube_undefined_20210326020917_cover.jpeg'
     ];
     let listHTML = [];
     arr.forEach( text => {

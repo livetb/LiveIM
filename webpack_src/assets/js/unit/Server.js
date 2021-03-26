@@ -1,11 +1,17 @@
 import axios from 'axios';
-import { Message } from '../bean/Message.js';
-import { UserInfo } from '../bean/UserInfo.js';
+// import { Message } from '../bean/Message.js';
+// import { UserInfo } from '../bean/UserInfo.js';
+
+/**
+ * @typedef { Promise<{ status: 0 | 413 | 2001, data: { }}> }
+ */
+let BaseResponseType;
 
 const is_test = true;
 
 const config = {
-  baseURL: is_test ? 'https://t.livehub.cloud' : 'https://t.livehub.cloud'
+  baseURL: is_test ? 'https://t.livehub.cloud' : 'https://t.livehub.cloud',
+  no_send_msg: false,
 }
 
 axios.defaults.baseURL = config.baseURL;
@@ -51,6 +57,7 @@ class ServerUnit {
    * @returns { Promise<{ status: Number, msg: String}> }
    */
   sendMessage(relateUid, content, messageType = 0) {
+    if (config.no_send_msg) return;
     let param = { relateUid, content, messageType};
     return axios.post('/api/message/send/', param);
   }
@@ -63,8 +70,9 @@ class ServerUnit {
    * @returns { Promise<{ status: Number, msg: String}> }
    */
   sendMediaMessage(filename, relateUid, messageType) {
+    if (config.no_send_msg) return;
     let param = { filename, relateUid, messageType};
-    return axios.post('/api/uploadMedia/');
+    return axios.post('/api/uploadMedia/', param);
   }
 
   /**
@@ -73,6 +81,15 @@ class ServerUnit {
    */
   getUserProfile( uid ){
     return axios.post('/api/user/info/', { relateUid: uid });
+  }
+
+  /**
+   * @param { String } username 
+   * @param { String } password 
+   * @returns { BaseResponseType }
+   */
+  login( username, password ){
+    return 1;
   }
 }
 
