@@ -133,6 +133,26 @@ html, body {
       }
     }
   }
+
+  .more-list-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    .more-list {
+      display: inline-block;
+      padding: 5px 10px;
+      background: #999;
+      border-radius: 5px;
+      font-size: 14px;
+      color: #FFF;
+      cursor: pointer;
+      &, &:focus {
+        border: none;
+        outline: none;
+      }
+    }
+  }
 }
 
 // chat-room 用户资料、 消息列表、快捷消息、发送消息

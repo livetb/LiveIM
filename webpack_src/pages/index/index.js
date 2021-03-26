@@ -37,7 +37,12 @@ class ThePage {
     parent: null,
     /**@type { String } */
     parent_cssSelector: '#chat_block',
-    /**@type { HTMLElement } */
+    // 加载至第几页未读消息用户列表
+    pageNum: {
+      user_list: 2
+    },
+    // 页面是否可见
+    page_visible: true
   }
 
   already = {
@@ -53,7 +58,6 @@ class ThePage {
     this.userList = new UserList();
     this.chatRoom = new ChatRoom();
     this.init();
-    this.bindListener();
   }
 
   /**
@@ -63,9 +67,9 @@ class ThePage {
 
   init(){
     this.initView();
-    // user_list_arr.forEach(user => this.userList.appendUser(user));
-    // console.log('ThePage: ', this);
     this.getMessageUserList();
+    this.bindListener();
+    this.startMessageUserListTimer();
   }
   
   initView(){
@@ -78,8 +82,8 @@ class ThePage {
     this.already.init.view = true;
   }
 
-  async getMessageUserList(){
-    let { status, data } = await Server.getMessageUserList();
+  async getMessageUserList( pageNum = 1 ){
+    let { status, data } = await Server.getUnreadMessageUserList(pageNum);
     if (status !== 0) return;
     console.log('getMessageUserList: ', data);
     data.forEach( user => {
@@ -87,24 +91,37 @@ class ThePage {
       this.userList.appendUser(user);
       this.UserInfoMap.set(user.uid, user);
     });
+  }
+
+  startMessageUserListTimer(){
     let usp = new URLSearchParams(location.search);
     if (usp.get('timer') === 'on') {
       let sec = ~~usp.get('sec');
-      let duration = sec > 0 ? sec * 1000 : 10 * 1000;
+      let duration = sec > 15 ? sec * 1000 : 15000;
       console.log('Start Timer: ', { duration });
-      setTimeout(() => {
+      setInterval(() => {
         this.getMessageUserList();
       }, duration);
     }
   }
 
   bindListener(){
+    // 切换聊天用户
     this.userList.setListener('changed_user', (param) => {
-      // console.log('ThePage changed user: ', param);
       let { is_checked, user } = param;
       if (is_checked) this.chatRoom.notifyUserChaned( user );
+    });
+    // 更多未读消息用户列表
+    this.userList.setListener('more_list',() => {
+      this.getMessageUserList(this.config.pageNum.user_list++);
+    });
+    // 检测页面是否可见
+    document.addEventListener('visibilitychange', () => {
+      let visible = document.visibilityState;
+      this.config.page_visible === ( visible === "visible");
     });
   }
 }
 
 const thePage = new ThePage();
+window.thePage = thePage;

@@ -35,6 +35,7 @@ class ServerUnit {
   }
 
   /**
+   * 获取消息列表
    * @param { {"query":{},"pageSize":20,"pageNum":1} } param 
    * @returns { Promise<{ status: Number, data: UserInfo[]}> }
    */
@@ -43,6 +44,22 @@ class ServerUnit {
   }
 
   /**
+   * 获取未读消息列表
+   * @param { Number } pageNum 
+   * @param { Number } pageSize 
+   * @param { Number } type 
+   * @returns { BaseResponseType }
+   */
+  getUnreadMessageUserList( pageNum = 1, pageSize = 20, type = 2 ) {
+    let param = {query: {type}, pageSize, pageNum };
+    return axios.post('/api2/customer/msg/list', param);
+  }
+  getAlreadyReadMessageUserList( pageNum = 1, pageSize = 20 ) {
+    return this.getUnreadMessageUserList( pageNum, pageSize, 3);
+  }
+
+  /**
+   * 获取和用户对话详情列表
    * @param { {"query":{"relateUid":3901604053073969},"pageSize":20,"pageNum":1} } param 
    * @returns { Promise<{ status: Number, data: Message[]}> }
    */
@@ -51,6 +68,7 @@ class ServerUnit {
   }
 
   /**
+   * 发送消息给用户
    * @param { String } relateUid 
    * @param { String } content 
    * @param { 0 | 1 | 3 } messageType 
@@ -63,7 +81,7 @@ class ServerUnit {
   }
 
   /**
-   * 
+   * 发送媒体消息给用户
    * @param { File } filename 
    * @param { String } relateUid 
    * @param { 1 | 2 | 4 } messageType - 2: 图片
@@ -76,6 +94,7 @@ class ServerUnit {
   }
 
   /**
+   * 获取用户个人资料
    * @param { String } uid
    * @returns { Promise<{ status: Number, data: { uid: String, createdAt: String, diamond: Number}}> }
    */
@@ -84,6 +103,7 @@ class ServerUnit {
   }
 
   /**
+   * 登录
    * @param { String } username 
    * @param { String } password 
    * @returns { BaseResponseType }

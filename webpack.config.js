@@ -13,7 +13,7 @@ const PATH = {
 }
 
 const Config = {
-    is_development: false
+    is_development: true
 }
 
 module.exports = (() => {

@@ -155,6 +155,28 @@ html, body {
   color: #999;
 }
 
+.user-list .more-list-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.user-list .more-list-wrap .more-list {
+  display: inline-block;
+  padding: 5px 10px;
+  background: #999;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #FFF;
+  cursor: pointer;
+}
+
+.user-list .more-list-wrap .more-list, .user-list .more-list-wrap .more-list:focus {
+  border: none;
+  outline: none;
+}
+
 .chat-room {
   display: flex;
   flex-direction: column;

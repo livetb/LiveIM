@@ -15,13 +15,15 @@ class UserWrap {
    *  ele: HTMLElement,
    *  input: HTMLElement,
    *  badge: HTMLElement,
+   *  last_message: HTMLElement,
    * }}
    */
   config = {
     classList: ['user-wrap'],
     ele: null,
     input: null,
-    badge: null
+    badge: null,
+    last_message: null
   }
 
   on = {
@@ -33,14 +35,13 @@ class UserWrap {
    * @param { UserInfo } user 
    */
   constructor( user ){
-    // super();
     this.user = user;
     this.init();
   }
   
   init(){
-    // console.log('UserWrap: init.');
     this.initView();
+    this.bindListener();
   }
 
   initView(){
@@ -73,8 +74,12 @@ class UserWrap {
     config.ele = ele;
     config.badge = ele.querySelector('.badge');
     config.input = ele.querySelector('input');
+    config.last_message = ele.querySelector('.last-message');
+  }
+
+  bindListener(){
     let that = this;
-    config.input.addEventListener('change', function(){
+    this.config.input.addEventListener('change', function(){
       let is_checked = this.checked;
       let param = {
         is_checked,
@@ -117,6 +122,10 @@ class UserWrap {
     } else {
       badge.classList.add('hide-ele');
     }
+  }
+
+  updateLastMessage( message ) {
+    this.config.last_message.innerText = message;
   }
 }
 

@@ -6,12 +6,15 @@ class UserList {
   /**
    * @type {{
    *  id: String, classList: String[], ele: HTMLElement,
+   *  more_list_wrap: HTMLElement, more_list: HTMLElement
    * }}
    */
   config = {
     id: 'user_list',
     classList: ['user-list'],
     ele: null,
+    more_list_wrap: null,
+    more_list: null
   }
   /**
    * @type { Map<String, {
@@ -24,7 +27,8 @@ class UserList {
   UserMap = new Map();
 
   on = {
-    changed_user: null
+    changed_user: null,
+    more_list: null
   }
 
   constructor(id, classList){
@@ -46,26 +50,49 @@ class UserList {
     ele.id = config.id;
     ele.classList.add(...config.classList);
     config.ele = ele;
+    ele.innerHTML = `
+    <div class="more-list-wrap">
+      <button class="more-list">more</button>
+    </div>
+    `;
+    config.more_list_wrap = ele.querySelector('.more-list-wrap');
+    config.more_list = ele.querySelector('.more-list');
   }
 
   bindListener(){
-    let that = this;
-    let scroll_timer = null;
-    let can_scroll = true;
-    this.config.ele.addEventListener('scroll', function(){
-      if (!can_scroll) return;
-      can_scroll = false;
-      let clientHeight = this.clientHeight;
-      let scrollHeight = this.scrollHeight;
-      let scrollTop = this.scrollTop;
-      console.log('UserList Scroll: ', { clientHeight, scrollTop, scrollHeight});
-      if (scrollTop + clientHeight + 5 >= scrollHeight) {
-        console.log('Already Scroll To Bottom.');
-      } else console.log('No Scroll To Bottom.');
-      scroll_timer = setTimeout(() => {
-        can_scroll = true;
-      }, 500);
+    // let that = this;
+    let moreListener = (() => {
+      let timer;
+      let flag = true;
+      return () => {
+        if (!flag) return;
+        flag = false;
+        this.notifyListener('more_list');
+        if(timer) clearTimeout(timer);
+        timer = setInterval(() => {
+          flag = true;
+        }, 2000);
+      }
+    })();
+    this.config.more_list.addEventListener('click', function(){
+      moreListener(this);
     });
+    // let scroll_timer = null;
+    // let can_scroll = true;
+    // this.config.ele.addEventListener('scroll', function(){
+    //   if (!can_scroll) return;
+    //   can_scroll = false;
+    //   let clientHeight = this.clientHeight;
+    //   let scrollHeight = this.scrollHeight;
+    //   let scrollTop = this.scrollTop;
+    //   console.log('UserList Scroll: ', { clientHeight, scrollTop, scrollHeight});
+    //   if (scrollTop + clientHeight + 5 >= scrollHeight) {
+    //     console.log('Already Scroll To Bottom.');
+    //   } else console.log('No Scroll To Bottom.');
+    //   scroll_timer = setTimeout(() => {
+    //     can_scroll = true;
+    //   }, 500);
+    // });
   }
 
   getElement(){
@@ -92,27 +119,29 @@ class UserList {
           user: user
         });
       });
-      cur.user_wrap.updateBadge(user.unReadCount);
-      this.config.ele.appendChild(cur.user_wrap.getElement());
+      this.config.ele.insertBefore(cur.user_wrap.getElement(), this.config.more_list_wrap);
       this.UserMap.set(user.uid, cur);
     }
+    cur.user_wrap.updateBadge(user.unReadCount);
+    cur.user_wrap.updateLastMessage(user.lastMessage);
     cur.updated_time = Date.now();
     cur.user = user;
     if (this.UserMap.size === 1) {
       cur.user_wrap.checked();
+      cur.user_wrap.updateBadge(0);
       this.notifyListener('changed_user', { is_checked: true, user: cur.user });
     }
   }
 
   /**
-   * @param { 'changed_user' } event_name 
+   * @param { 'changed_user' | 'more_list' } event_name 
    * @param { Function({ is_checked: Boolean, uid: String }) } callback 
    */
   setListener( event_name, callback ) {
     this.on[event_name] = callback;
   }
   /**
-   * @param { 'changed_user' } event_name 
+   * @param { 'changed_user' | 'more_list' } event_name 
    * @param { Function({ is_checked: Boolean, user: UserInfo }) } param 
    */
   notifyListener( event_name, param ) {
