@@ -35,6 +35,7 @@ class UserList {
 
   init(){
     this.initView();
+    this.bindListener();
   }
 
   initView(){
@@ -45,6 +46,26 @@ class UserList {
     ele.id = config.id;
     ele.classList.add(...config.classList);
     config.ele = ele;
+  }
+
+  bindListener(){
+    let that = this;
+    let scroll_timer = null;
+    let can_scroll = true;
+    this.config.ele.addEventListener('scroll', function(){
+      if (!can_scroll) return;
+      can_scroll = false;
+      let clientHeight = this.clientHeight;
+      let scrollHeight = this.scrollHeight;
+      let scrollTop = this.scrollTop;
+      console.log('UserList Scroll: ', { clientHeight, scrollTop, scrollHeight});
+      if (scrollTop + clientHeight + 5 >= scrollHeight) {
+        console.log('Already Scroll To Bottom.');
+      } else console.log('No Scroll To Bottom.');
+      scroll_timer = setTimeout(() => {
+        can_scroll = true;
+      }, 500);
+    });
   }
 
   getElement(){

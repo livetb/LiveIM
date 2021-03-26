@@ -17,6 +17,7 @@ class UserProfile {
     info: {
       uid: null,
       diamond: null,
+      nickname: null,
       createdAt: null
     }
   }
@@ -32,6 +33,15 @@ class UserProfile {
     this.initView();
   }
 
+  renderUserProfileHTML(){
+    for (let key in this.config.info) {
+      let info_ele = document.createElement('p');
+      info_ele.classList.add('item', key);
+      this.config.info[key] = info_ele;
+      this.config.ele.appendChild(info_ele);
+    }
+  }
+
   initView(){
     let config = this.config;
     let ele = config.ele;
@@ -40,14 +50,7 @@ class UserProfile {
     ele.id = config.id;
     ele.classList.add(...config.classList);
     config.ele = ele;
-    ele.innerHTML = `
-    <p class="item uid"></p>
-    <p class="item diamond"></p>
-    <p class="item createdAt"></p>
-    `;
-    config.info.uid = ele.querySelector('.uid');
-    config.info.diamond = ele.querySelector('.diamond');
-    config.info.createdAt = ele.querySelector('.createdAt');
+    this.renderUserProfileHTML();
   }
 
   getElement(){
@@ -60,7 +63,7 @@ class UserProfile {
   updateProfile( profile ){
     this.config.ele.classList.remove('hide-ele');
     for (let key in this.config.info) {
-      this.config.info[key].innerText = `${key}: ${profile[key]}`;
+      this.config.info[key].innerHTML = `<span>${key}</span>: <b>${profile[key]}</b>`;
     }
   }
 

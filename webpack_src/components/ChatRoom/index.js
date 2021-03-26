@@ -171,6 +171,10 @@ class ChatRoom {
     // console.log('message detail: ', data);
     /**  */
 
+    this.RecordListMap.forEach( obj => {
+      if (obj.list.uid !== uid) obj.list.hide();
+      else console.log('Same UID, break.')
+    });
     this.curChatRecordList = curChatRecordList;
     curChatRecordList.show();
     curChatRecordList.getElement().scrollTop = curChatRecordList.getElement().scrollHeight;

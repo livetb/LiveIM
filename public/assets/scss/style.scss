@@ -15,16 +15,11 @@ html, body {
   max-width: 1200px;
   margin: auto;
   &.first {
-    margin-top: 30px;
+    margin-top: 3vh;
     display: grid;
     grid-template-columns: 300px auto;
-    grid-template-rows: 90vh;
+    grid-template-rows: 95vh;
     box-shadow: 0 0 1px #333;
-    // border: 1px solid #ddd;
-    .user-list {
-      border-right: 1px solid #ddd;
-      overflow-y: scroll;
-    }
   }
 }
 
@@ -60,6 +55,8 @@ html, body {
 }
 
 .user-list {
+  border-right: 1px solid #ddd;
+  overflow-y: scroll;
   input[name='list-user'] {
     display: none;
     &:checked + .user {
@@ -71,13 +68,19 @@ html, body {
     cursor: pointer;
     .user {
       display: grid;
-      grid-template-columns: 80px auto;
+      grid-template-columns: 30px 70px auto;
       overflow: hidden;
       border-bottom: 1px solid #333;
       padding: 15px 0;
       transition: all 0.4s ease-in-out;
       & > * {
         height: 50px;
+      }
+      .serial {
+        line-height: 50px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
       }
       .avatar-wrap {
         display: flex;
@@ -220,29 +223,36 @@ html, body {
   }
   // 快捷消息
   .fast-message-list-wrap {
-    height: 120px;
-    max-height: 120px;
-    // overflow: hidden;
+    max-height: 210px;
+    transition: all 0.4s ease-in-out;
     input[type='checkbox'] {
+      // cursor: pointer;
       display: none;
       & + .switch {
-        width: 100%;
-        height: 20px;
+        display: inline-block;
+        // width: 100%;
+        height: 30px;
         margin: 0;
-        padding: 0 0 0 20px;
-        background: #FFF;
-        &::before {
-          content: '-';
+        padding: 0 50px 0 20px;
+        background: coral;
+        color: #FFF;
+        transition: all 0.4s ease-in-out;
+        cursor: pointer;
+        & > * {
+          margin: 0;
+        }
+        & > p::before {
+          content: '- close fast message';
           display: inline-block;
           font-size: 16px;
-          line-height: 20px;
+          line-height: 30px;
           font-weight: bold;
         }
       }
       &:checked + .switch {
         background: skyblue;
-        &::before {
-          content: '+';
+        & > p::before {
+          content: '+ open fast message';
         }
 
         & + .fast-message-list {
@@ -251,23 +261,25 @@ html, body {
       }
     }
     .fast-message-list {
-      height: 100px;
-      max-height: 100px;
+      max-height: 180px;
       width: 100%;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       border-top: 1px solid #000;
       overflow-y: scroll;
+      transition: all 0.4s ease-in-out;
       .text-list {
         & > .item {
           margin: 0;
-          font-size: 18px;
-          line-height: 30px;
-          padding-left: 10px;
+          font-size: 16px;
+          padding: 5px 10px;
           font-weight: bold;
           border-bottom: 1px solid #000;
           white-space: pre-line;
           cursor: pointer;
+          &:nth-child(even) {
+            background: #DDD;
+          }
         }
         border-right: 1px solid #000;
 
@@ -284,9 +296,24 @@ html, body {
           transition: all 0.4s ease-in-out;
           cursor: pointer;
           &:hover {
-            transform: scale(1.5);
-            object-fit: contain;
+            & + .preview {
+              max-width: 500px;
+              max-height: 500px;
+              object-fit: contain;
+              box-shadow: 0 0 10px 0px #000;
+              z-index: 9;
+            }
           }
+        }
+        & > img.preview {
+          position: fixed;
+          z-index: 0;
+          top: 0;
+          right: 0;
+          max-width: 500px;
+          max-height: 0px;
+          overflow: hidden;
+          transition: all 0.5s ease-in-out;
         }
       }
     }

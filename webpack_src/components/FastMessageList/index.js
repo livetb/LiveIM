@@ -80,7 +80,10 @@ class FastMessageList {
     ];
     let listHTML = [];
     arr.forEach( text => {
-      listHTML.push(`<img class="item" src="${text}" />`);
+      listHTML.push(`
+      <img class="item" src="${text}" />
+      <img class="preview" src="${text}" />
+      `);
     });
     return listHTML.join('');
   }
@@ -94,8 +97,10 @@ class FastMessageList {
     ele.classList.add(...config.classList);
     config.ele = ele;
     ele.innerHTML = `
-    <input type="checkbox" />
-    <p class="switch hide-ele"></p>
+    <input checked="true" id="fast_message_list_switch_input" type="checkbox" />
+    <label class="switch" for="fast_message_list_switch_input">
+      <p></p>
+    </label>
     <div class="fast-message-list">
       <div class="text-list">
         ${this.fastTextList()}

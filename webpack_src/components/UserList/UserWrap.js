@@ -3,6 +3,8 @@ import { ObjectUnit } from '../../assets/js/unit/ObjectUnit.js';
 
 import { UserInfo } from '../../assets/js/bean/UserInfo.js';
 
+var serial_number = 1;
+
 class UserWrap {
   /**@type { UserInfo } */
   user;
@@ -53,6 +55,7 @@ class UserWrap {
     ele.innerHTML = `
     <input uid="${user.uid}" type="radio" name="list-user" >
     <div class="user">
+      <div class="serial">${serial_number++}</div>
       <div class="avatar-wrap">
         <div class="rectangle-box square">
           <div class="avatar no1">

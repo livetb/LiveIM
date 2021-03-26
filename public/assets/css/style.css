@@ -18,16 +18,11 @@ html, body {
 }
 
 .content-block.first {
-  margin-top: 30px;
+  margin-top: 3vh;
   display: grid;
   grid-template-columns: 300px auto;
-  grid-template-rows: 90vh;
+  grid-template-rows: 95vh;
   box-shadow: 0 0 1px #333;
-}
-
-.content-block.first .user-list {
-  border-right: 1px solid #ddd;
-  overflow-y: scroll;
 }
 
 .rectangle-box {
@@ -65,6 +60,11 @@ html, body {
   z-index: 3;
 }
 
+.user-list {
+  border-right: 1px solid #ddd;
+  overflow-y: scroll;
+}
+
 .user-list input[name='list-user'] {
   display: none;
 }
@@ -80,7 +80,7 @@ html, body {
 
 .user-list .user-wrap .user {
   display: grid;
-  grid-template-columns: 80px auto;
+  grid-template-columns: 30px 70px auto;
   overflow: hidden;
   border-bottom: 1px solid #333;
   padding: 15px 0;
@@ -89,6 +89,13 @@ html, body {
 
 .user-list .user-wrap .user > * {
   height: 50px;
+}
+
+.user-list .user-wrap .user .serial {
+  line-height: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .user-list .user-wrap .user .avatar-wrap {
@@ -252,8 +259,8 @@ html, body {
 }
 
 .chat-room .fast-message-list-wrap {
-  height: 120px;
-  max-height: 120px;
+  max-height: 210px;
+  transition: all 0.4s ease-in-out;
 }
 
 .chat-room .fast-message-list-wrap input[type='checkbox'] {
@@ -261,18 +268,25 @@ html, body {
 }
 
 .chat-room .fast-message-list-wrap input[type='checkbox'] + .switch {
-  width: 100%;
-  height: 20px;
+  display: inline-block;
+  height: 30px;
   margin: 0;
-  padding: 0 0 0 20px;
-  background: #FFF;
+  padding: 0 50px 0 20px;
+  background: coral;
+  color: #FFF;
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
 }
 
-.chat-room .fast-message-list-wrap input[type='checkbox'] + .switch::before {
-  content: '-';
+.chat-room .fast-message-list-wrap input[type='checkbox'] + .switch > * {
+  margin: 0;
+}
+
+.chat-room .fast-message-list-wrap input[type='checkbox'] + .switch > p::before {
+  content: '- close fast message';
   display: inline-block;
   font-size: 16px;
-  line-height: 20px;
+  line-height: 30px;
   font-weight: bold;
 }
 
@@ -280,8 +294,8 @@ html, body {
   background: skyblue;
 }
 
-.chat-room .fast-message-list-wrap input[type='checkbox']:checked + .switch::before {
-  content: '+';
+.chat-room .fast-message-list-wrap input[type='checkbox']:checked + .switch > p::before {
+  content: '+ open fast message';
 }
 
 .chat-room .fast-message-list-wrap input[type='checkbox']:checked + .switch + .fast-message-list {
@@ -289,13 +303,13 @@ html, body {
 }
 
 .chat-room .fast-message-list-wrap .fast-message-list {
-  height: 100px;
-  max-height: 100px;
+  max-height: 180px;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   border-top: 1px solid #000;
   overflow-y: scroll;
+  transition: all 0.4s ease-in-out;
 }
 
 .chat-room .fast-message-list-wrap .fast-message-list .text-list {
@@ -304,13 +318,16 @@ html, body {
 
 .chat-room .fast-message-list-wrap .fast-message-list .text-list > .item {
   margin: 0;
-  font-size: 18px;
-  line-height: 30px;
-  padding-left: 10px;
+  font-size: 16px;
+  padding: 5px 10px;
   font-weight: bold;
   border-bottom: 1px solid #000;
   white-space: pre-line;
   cursor: pointer;
+}
+
+.chat-room .fast-message-list-wrap .fast-message-list .text-list > .item:nth-child(even) {
+  background: #DDD;
 }
 
 .chat-room .fast-message-list-wrap .fast-message-list .image-list {
@@ -328,9 +345,23 @@ html, body {
   cursor: pointer;
 }
 
-.chat-room .fast-message-list-wrap .fast-message-list .image-list > img.item:hover {
-  transform: scale(1.5);
+.chat-room .fast-message-list-wrap .fast-message-list .image-list > img.item:hover + .preview {
+  max-width: 500px;
+  max-height: 500px;
   object-fit: contain;
+  box-shadow: 0 0 10px 0px #000;
+  z-index: 9;
+}
+
+.chat-room .fast-message-list-wrap .fast-message-list .image-list > img.preview {
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  max-width: 500px;
+  max-height: 0px;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
 }
 
 .chat-room .send-message-wrap {
