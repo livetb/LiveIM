@@ -59,6 +59,10 @@ class FastMessageList {
       Best,
       Emily`,
       'Thanks.',
+      'Please try to refresh your Wallet page. If you still cannot see the balance, please provide the purchasing record screenshot for our reference.',
+      'Your account would be deleted in 10 minutes. Please do not login again, your account would be reactivated.',
+      'All our users are verified. If you think someone is fake, you could make a report. You may click the button on the top right corner to block a specific person and he/she would not show on your profile anymore.',
+      'You may swipe to match with the person you like and then send them messages for free. You could even video call them privately. Hope you enjoy it!',
     ];
     let listHTML = [];
     arr.forEach( text => {
