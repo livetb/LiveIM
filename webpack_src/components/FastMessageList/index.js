@@ -66,7 +66,7 @@ class FastMessageList {
       'Sorry it is not location based app, we provide wordwide users for matching.',
       `Sorry, I m here to work solving users' problems only :)`,
       'You may buy diamonds in the wallet.',
-      `Hello, I am Emily, anything can help?
+      `Hello, I am Emily, anything I can help?
 
       :)`,
     ];
