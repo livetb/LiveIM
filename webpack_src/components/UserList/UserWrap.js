@@ -56,8 +56,8 @@ class UserWrap {
     ele.innerHTML = `
     <input uid="${user.uid}" type="radio" name="list-user" >
     <div class="user">
-      <div class="serial">${serial_number++}</div>
-      <div class="avatar-wrap">
+      <div class="serial ${user.diamond > 0 ? 'diamond' : ''}">${serial_number++}</div>
+      <div class="avatar-wrap ${user.star > 0 ? 'star' : ''}">
         <div class="rectangle-box square">
           <div class="avatar no1">
             <img src="${user.avatar}" />
@@ -68,6 +68,7 @@ class UserWrap {
       <div class="message-wrap">
         <h2 class="name">${user.nickname}</h2>
         <p class="last-message">${user.lastMessage}</p>
+        <p class="diamond-and-star">dimond: ${user.diamond} / star: ${user.star}</p>
       </div>
     </div>
     `;

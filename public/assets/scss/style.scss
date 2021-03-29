@@ -81,11 +81,18 @@ html, body {
         font-size: 16px;
         font-weight: bold;
         text-align: center;
+        &.diamond {
+          background: coral;
+          color: #FFF;
+        }
       }
       .avatar-wrap {
         display: flex;
         align-items: center;
         justify-content: center;
+        &.star {
+          background: skyblue;
+        }
         .rectangle-box.square {
           width: 50px;
           .avatar.no1 > img {
@@ -112,6 +119,7 @@ html, body {
       .message-wrap {
         padding: 0 10px;
         overflow: hidden;
+        height: auto;
         * {
           word-break: keep-all;
           white-space: nowrap;
@@ -121,7 +129,6 @@ html, body {
         .name {
           margin: 0;
           font-size: 18px;
-          line-height: 30px;
           color: #000;
         }
         .last-message {
@@ -129,6 +136,11 @@ html, body {
           font-size: 14px;
           line-height: 20px;
           color: #999;
+        }
+        .diamond-and-star {
+          margin: 0;
+          font-size: 12px;
+          color: coral;
         }
       }
     }

@@ -7,8 +7,10 @@ class UserInfo {
   /**@type { String } */ age;
   /**@type { String } */ lastMessage;
   /**@type { Number } */ updateBadge;
+  /**@type { Number } */ diamond;
+  /**@type { Number } */ star;
 
-  constructor(id, uid, nickname, avatar, gender, age, lastMessage){
+  constructor(id, uid, nickname, avatar, gender, age, lastMessage, diamond, star){
     this.id = id;
     this.uid = uid;
     this.nickname = nickname;
@@ -16,6 +18,8 @@ class UserInfo {
     this.gender = gender;
     this.age = age;
     this.lastMessage = lastMessage;
+    this.diamond = diamond;
+    this.star = star;
   }
 }
 

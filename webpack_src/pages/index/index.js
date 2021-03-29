@@ -86,6 +86,9 @@ class ThePage {
     let { status, data } = await Server.getUnreadMessageUserList(pageNum);
     if (status !== 0) return;
     console.log('getMessageUserList: ', data);
+    data.sort((a, b) => {
+      return b.diamond - a.diamond;
+    });
     data.forEach( user => {
       user.uid = user.relateUid;
       this.userList.appendUser(user);

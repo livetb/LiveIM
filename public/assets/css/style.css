@@ -98,10 +98,19 @@ html, body {
   text-align: center;
 }
 
+.user-list .user-wrap .user .serial.diamond {
+  background: coral;
+  color: #FFF;
+}
+
 .user-list .user-wrap .user .avatar-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.user-list .user-wrap .user .avatar-wrap.star {
+  background: skyblue;
 }
 
 .user-list .user-wrap .user .avatar-wrap .rectangle-box.square {
@@ -132,6 +141,7 @@ html, body {
 .user-list .user-wrap .user .message-wrap {
   padding: 0 10px;
   overflow: hidden;
+  height: auto;
 }
 
 .user-list .user-wrap .user .message-wrap * {
@@ -144,7 +154,6 @@ html, body {
 .user-list .user-wrap .user .message-wrap .name {
   margin: 0;
   font-size: 18px;
-  line-height: 30px;
   color: #000;
 }
 
@@ -153,6 +162,12 @@ html, body {
   font-size: 14px;
   line-height: 20px;
   color: #999;
+}
+
+.user-list .user-wrap .user .message-wrap .diamond-and-star {
+  margin: 0;
+  font-size: 12px;
+  color: coral;
 }
 
 .user-list .more-list-wrap {
