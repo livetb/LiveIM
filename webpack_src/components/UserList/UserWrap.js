@@ -138,8 +138,12 @@ class UserWrap {
       flag = 'no-'+filter;
     } else {
       switch( filter ) {
-        case 'diamond': flag = this.user.diamond > 0 ? '' : 'no-diamond'; break;
-        case    'star': flag = this.user.star > 0 ? '' : 'no-star'; break;
+        case 'diamond': {
+          flag = this.user.diamond > 0 ? '' : 'no-diamond';
+        }; break;
+        case    'star': {
+          flag = this.user.star > 0 ? '' : 'no-star';
+        }; break;
         default : flag = 'hide-ele';
       }
     }
@@ -156,7 +160,15 @@ class UserWrap {
   /**
    * @param { '' | 'diamond' | 'star' } filter
    */
-  show( filter ){
+  show( filter, diamond_or_star ){
+    if (diamond_or_star) {
+      if (this.user.diamond > 0 || this.user.star > 0) {
+        this.config.ele.classList.remove('no-diamond', 'no-star');
+      } else {
+        this.config.ele.classList.add('no-diamond', 'no-star');
+      }
+      return;
+    }
     this.hide( filter, true);
   }
 }

@@ -104,6 +104,10 @@ class UserList {
       let is_checked = this.config.filter_diamond.checked;
       this.config.filter.diamond = is_checked;
       this.UserMap.forEach( user => {
+        if (this.config.filter.diamond && this.config.filter.star) {
+          user.user_wrap.show('', true);
+          return;
+        }
         is_checked ? user.user_wrap.hide('diamond') : user.user_wrap.show('diamond');
       });
     });
@@ -111,6 +115,10 @@ class UserList {
       let is_checked = this.config.filter_star.checked;
       this.config.filter.star = is_checked;
       this.UserMap.forEach( user => {
+        if (this.config.filter.diamond && this.config.filter.star) {
+          user.user_wrap.show('', true);
+          return;
+        }
         is_checked ? user.user_wrap.hide('star') : user.user_wrap.show('star');
       });
     });
