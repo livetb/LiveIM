@@ -128,6 +128,37 @@ class UserWrap {
   updateLastMessage( message ) {
     this.config.last_message.innerText = message;
   }
+
+  /**
+   * @param { '' | 'diamond' | 'star' } filter
+   */
+  hide( filter, reserve ){
+    let flag = "";
+    if (reserve) {
+      flag = 'no-'+filter;
+    } else {
+      switch( filter ) {
+        case 'diamond': flag = this.user.diamond > 0 ? '' : 'no-diamond'; break;
+        case    'star': flag = this.user.star > 0 ? '' : 'no-star'; break;
+        default : flag = 'hide-ele';
+      }
+    }
+    // console.log('UserWrap.hide: ', { filter, reserve, flag, list: this.config.ele.classList});
+    // return;
+    if (!flag) return;
+    if (reserve) {
+      this.config.ele?.classList.remove(flag);
+    } else {
+      this.config.ele?.classList.add(flag);
+    }
+  }
+
+  /**
+   * @param { '' | 'diamond' | 'star' } filter
+   */
+  show( filter ){
+    this.hide( filter, true);
+  }
 }
 
 export {

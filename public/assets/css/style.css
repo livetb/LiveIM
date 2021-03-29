@@ -65,6 +65,28 @@ html, body {
   overflow-y: scroll;
 }
 
+.user-list .filter-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.user-list .filter-grid input[name='filter-diamond'], .user-list .filter-grid input[name='filter-star'] {
+  margin-right: 10px;
+}
+
+.user-list .filter-grid input[name='filter-diamond'] + span, .user-list .filter-grid input[name='filter-star'] + span {
+  font-size: 18px;
+}
+
+.user-list .filter-grid label.filter {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  align-items: center;
+}
+
 .user-list input[name='list-user'] {
   display: none;
 }
@@ -76,6 +98,10 @@ html, body {
 .user-list .user-wrap {
   background: #FFF;
   cursor: pointer;
+}
+
+.user-list .user-wrap.no-diamond, .user-list .user-wrap.no-star {
+  display: none;
 }
 
 .user-list .user-wrap .user {

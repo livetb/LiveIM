@@ -57,6 +57,25 @@ html, body {
 .user-list {
   border-right: 1px solid #ddd;
   overflow-y: scroll;
+  .filter-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    input[name='filter-diamond'], input[name='filter-star'] {
+      margin-right: 10px;
+      & + span {
+        font-size: 18px;
+      }
+    }
+    label.filter {
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
+      align-items: center;
+    }
+  }
+
   input[name='list-user'] {
     display: none;
     &:checked + .user {
@@ -64,6 +83,9 @@ html, body {
     }
   }
   .user-wrap {
+    &.no-diamond, &.no-star {
+      display: none;
+    }
     background: #FFF;
     cursor: pointer;
     .user {

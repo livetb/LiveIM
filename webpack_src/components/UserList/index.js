@@ -6,7 +6,11 @@ class UserList {
   /**
    * @type {{
    *  id: String, classList: String[], ele: HTMLElement,
-   *  more_list_wrap: HTMLElement, more_list: HTMLElement
+   *  more_list_wrap: HTMLElement, more_list: HTMLElement,
+   *  filter_diamond: HTMLElement, filter_star: HTMLElement,
+   *  filter: {
+   *    diamond: Boolean, star: Boolean
+   *  }
    * }}
    */
   config = {
@@ -14,7 +18,13 @@ class UserList {
     classList: ['user-list'],
     ele: null,
     more_list_wrap: null,
-    more_list: null
+    more_list: null,
+    filter_diamond: null,
+    filter_star: null,
+    filter: {
+      diamond: false,
+      star: false,
+    }
   }
   /**
    * @type { Map<String, {
@@ -51,12 +61,24 @@ class UserList {
     ele.classList.add(...config.classList);
     config.ele = ele;
     ele.innerHTML = `
+    <div class="filter-grid">
+      <label class="filter">
+        <input type="checkbox" name="filter-diamond" />
+        <span>有钻石</span>
+      </label>
+      <label class="filter">
+        <input type="checkbox" name="filter-star" />
+        <span>有消费</span>
+      </label>
+    </div>
     <div class="more-list-wrap">
       <button class="more-list">more</button>
     </div>
     `;
     config.more_list_wrap = ele.querySelector('.more-list-wrap');
     config.more_list = ele.querySelector('.more-list');
+    config.filter_diamond = ele.querySelector('input[name="filter-diamond"]');
+    config.filter_star = ele.querySelector('input[name="filter-star"]');
   }
 
   bindListener(){
@@ -76,6 +98,21 @@ class UserList {
     })();
     this.config.more_list.addEventListener('click', function(){
       moreListener(this);
+    });
+    // filter
+    this.config.filter_diamond.addEventListener('change', () => {
+      let is_checked = this.config.filter_diamond.checked;
+      this.config.filter.diamond = is_checked;
+      this.UserMap.forEach( user => {
+        is_checked ? user.user_wrap.hide('diamond') : user.user_wrap.show('diamond');
+      });
+    });
+    this.config.filter_star.addEventListener('change', () => {
+      let is_checked = this.config.filter_star.checked;
+      this.config.filter.star = is_checked;
+      this.UserMap.forEach( user => {
+        is_checked ? user.user_wrap.hide('star') : user.user_wrap.show('star');
+      });
     });
     // let scroll_timer = null;
     // let can_scroll = true;
@@ -119,6 +156,8 @@ class UserList {
           user: user
         });
       });
+      // cur.user_wrap.hide('diamond');
+      // cur.user_wrap.hide('star');
       this.config.ele.insertBefore(cur.user_wrap.getElement(), this.config.more_list_wrap);
       this.UserMap.set(user.uid, cur);
     }
