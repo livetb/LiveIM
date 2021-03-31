@@ -42,7 +42,12 @@ class ThePage {
       user_list: 2
     },
     // 页面是否可见
-    page_visible: true
+    page_visible: true,
+    /**@type { {diamond: Boolean, star: Boolean} } */
+    filter: {
+      diamond: true,
+      star: true
+    }
   }
 
   already = {
@@ -57,6 +62,7 @@ class ThePage {
   constructor(){
     this.userList = new UserList();
     this.chatRoom = new ChatRoom();
+    this.config.filter = this.userList.config.filter;
     this.init();
   }
 
@@ -83,7 +89,8 @@ class ThePage {
   }
 
   async getMessageUserList( pageNum = 1 ){
-    let { status, data } = await Server.getUnreadMessageUserList(pageNum);
+    let { status, data } = await Server.getUnreadMessageUserList(pageNum, undefined, undefined,
+       this.config.filter.diamond, this.config.filter.star);
     if (status !== 0) return;
     console.log('getMessageUserList: ', data);
     data.sort((a, b) => {
@@ -122,6 +129,13 @@ class ThePage {
     document.addEventListener('visibilitychange', () => {
       let visible = document.visibilityState;
       this.config.page_visible === ( visible === "visible");
+    });
+    // 筛选用户类型
+    this.userList.setListener('filter_diamond', (param) => {
+      let { is_checked } = param;
+    });
+    this.userList.setListener('filter_star', (param) => {
+      let { is_checked } = param;
     });
   }
 }

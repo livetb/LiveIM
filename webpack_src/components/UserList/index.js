@@ -22,8 +22,8 @@ class UserList {
     filter_diamond: null,
     filter_star: null,
     filter: {
-      diamond: false,
-      star: false,
+      diamond: true,
+      star: true,
     }
   }
   /**
@@ -63,11 +63,11 @@ class UserList {
     ele.innerHTML = `
     <div class="filter-grid">
       <label class="filter">
-        <input type="checkbox" name="filter-diamond" />
+        <input type="checkbox" ${config.filter.diamond ? 'checked' : ''} name="filter-diamond" />
         <span>有钻石</span>
       </label>
       <label class="filter">
-        <input type="checkbox" name="filter-star" />
+        <input type="checkbox" ${config.filter.star ? 'checked' : ''} name="filter-star" />
         <span>有消费</span>
       </label>
     </div>
@@ -103,41 +103,27 @@ class UserList {
     this.config.filter_diamond.addEventListener('change', () => {
       let is_checked = this.config.filter_diamond.checked;
       this.config.filter.diamond = is_checked;
-      this.UserMap.forEach( user => {
-        if (this.config.filter.diamond && this.config.filter.star) {
-          user.user_wrap.show('', true);
-          return;
-        }
-        is_checked ? user.user_wrap.hide('diamond') : user.user_wrap.show('diamond');
-      });
+      this.notifyListener('filter_diamond', {is_checked});
+      // this.UserMap.forEach( user => {
+      //   if (this.config.filter.diamond && this.config.filter.star) {
+      //     user.user_wrap.show('', true);
+      //     return;
+      //   }
+      //   is_checked ? user.user_wrap.hide('diamond') : user.user_wrap.show('diamond');
+      // });
     });
     this.config.filter_star.addEventListener('change', () => {
       let is_checked = this.config.filter_star.checked;
       this.config.filter.star = is_checked;
-      this.UserMap.forEach( user => {
-        if (this.config.filter.diamond && this.config.filter.star) {
-          user.user_wrap.show('', true);
-          return;
-        }
-        is_checked ? user.user_wrap.hide('star') : user.user_wrap.show('star');
-      });
+      this.notifyListener('filter_star', {is_checked});
+      // this.UserMap.forEach( user => {
+      //   if (this.config.filter.diamond && this.config.filter.star) {
+      //     user.user_wrap.show('', true);
+      //     return;
+      //   }
+      //   is_checked ? user.user_wrap.hide('star') : user.user_wrap.show('star');
+      // });
     });
-    // let scroll_timer = null;
-    // let can_scroll = true;
-    // this.config.ele.addEventListener('scroll', function(){
-    //   if (!can_scroll) return;
-    //   can_scroll = false;
-    //   let clientHeight = this.clientHeight;
-    //   let scrollHeight = this.scrollHeight;
-    //   let scrollTop = this.scrollTop;
-    //   console.log('UserList Scroll: ', { clientHeight, scrollTop, scrollHeight});
-    //   if (scrollTop + clientHeight + 5 >= scrollHeight) {
-    //     console.log('Already Scroll To Bottom.');
-    //   } else console.log('No Scroll To Bottom.');
-    //   scroll_timer = setTimeout(() => {
-    //     can_scroll = true;
-    //   }, 500);
-    // });
   }
 
   getElement(){
@@ -164,8 +150,6 @@ class UserList {
           user: user
         });
       });
-      // cur.user_wrap.hide('diamond');
-      // cur.user_wrap.hide('star');
       this.config.ele.insertBefore(cur.user_wrap.getElement(), this.config.more_list_wrap);
       this.UserMap.set(user.uid, cur);
     }
@@ -181,14 +165,14 @@ class UserList {
   }
 
   /**
-   * @param { 'changed_user' | 'more_list' } event_name 
+   * @param { 'changed_user' | 'more_list' | 'filter_diamond' | 'filter_star' } event_name 
    * @param { Function({ is_checked: Boolean, uid: String }) } callback 
    */
   setListener( event_name, callback ) {
     this.on[event_name] = callback;
   }
   /**
-   * @param { 'changed_user' | 'more_list' } event_name 
+   * @param { 'changed_user' | 'more_list' | 'filter_diamond' | 'filter_star' } event_name 
    * @param { Function({ is_checked: Boolean, user: UserInfo }) } param 
    */
   notifyListener( event_name, param ) {

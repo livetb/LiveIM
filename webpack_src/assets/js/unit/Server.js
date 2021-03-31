@@ -48,10 +48,14 @@ class ServerUnit {
    * @param { Number } pageNum 
    * @param { Number } pageSize 
    * @param { Number } type 
+   * @param { Boolean } diamond 
+   * @param { Boolean } pay 
    * @returns { BaseResponseType }
    */
-  getUnreadMessageUserList( pageNum = 1, pageSize = 20, type = 2 ) {
+  getUnreadMessageUserList( pageNum = 1, pageSize = 20, type = 2, diamond, pay ) {
     let param = {query: {type}, pageSize, pageNum };
+    if (diamond) param.query.diamond = 1;
+    if (pay) param.query.pay = 1;
     return axios.post('/api2/customer/msg/list', param);
   }
   getAlreadyReadMessageUserList( pageNum = 1, pageSize = 20 ) {

@@ -44,6 +44,11 @@ class UserWrap {
     this.bindListener();
   }
 
+  renderDiamondStar(diamond, star){
+    if (diamond<1 && star < 1) return '';
+    return `<p class="diamond-and-star">dimond: ${diamond} / consume: ${star}</p>`;
+  }
+
   initView(){
     if (ObjectUnit.isEmptyObject(this.user)) return;
     // console.log('UserWrap.initView: ', { user: this.user, config: this.config});
@@ -68,7 +73,7 @@ class UserWrap {
       <div class="message-wrap">
         <h2 class="name">${user.nickname}</h2>
         <p class="last-message">${user.lastMessage}</p>
-        <p class="diamond-and-star">dimond: ${user.diamond} / star: ${user.star}</p>
+        ${this.renderDiamondStar(user.diamond, user.star)}
       </div>
     </div>
     `;
