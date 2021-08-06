@@ -13,24 +13,23 @@ const config = {
   baseURL: is_test ? 'https://t.livehub.cloud' : 'https://t.livehub.cloud',
   no_send_msg: false,
 }
-
 axios.defaults.baseURL = config.baseURL;
 axios.defaults.headers.common['authorization'] = "wgrdg78386a";
 axios.interceptors.response.use(function (response) {
-    let res = response.data;
-    // console.log("AxiosResposne => ", res);
-    // if(res.status === 413){
-    //     handleStatus413();
-    //     return;
-    // }
-    // if(res.status === 0) res.success = true;
-    return res;
+  let res = response.data;
+  // console.log("AxiosResposne => ", res);
+  // if(res.status === 413){
+  //     handleStatus413();
+  //     return;
+  // }
+  // if(res.status === 0) res.success = true;
+  return res;
 }, function (error) {
-    return Promise.reject(error);
+  return Promise.reject(error);
 });
 
 class ServerUnit {
-  constructor(){
+  constructor() {
 
   }
 
@@ -39,10 +38,25 @@ class ServerUnit {
    * @param { {"query":{},"pageSize":20,"pageNum":1} } param 
    * @returns { Promise<{ status: Number, data: UserInfo[]}> }
    */
-  getMessageUserList( param = {"query":{},"pageSize":20,"pageNum":1} ){
-    return axios.post('/api2/message/user/list/', param);
+  getMessageUserList(param = { "query": {}, "pageSize": 20, "pageNum": 1 }) {
+    // return axios.post('/api2/message/user/list/', param);
+    return axios.post('/api/user/list', param);
   }
-
+  /** 
+   * 获取全部用户列表
+   * @param{Number}pageNum
+   * @param{Number}pageSize
+   * @param{Number}userType
+   * @param{Boolean}diamond
+   * @param{Boolean}pay
+   * @returns {BaseResponseType}
+  */
+  getAllUserList(pageNum = 1, pageSize = 20, diamond, pay) {
+    let param = { query: {}, pageSize, pageNum };
+    if (diamond) param.query.diamond = 1;
+    if (pay) param.query.pay = 1;
+    return axios.post('/api/user/list', param);
+  }
   /**
    * 获取未读消息列表
    * @param { Number } pageNum 
@@ -52,14 +66,14 @@ class ServerUnit {
    * @param { Boolean } pay 
    * @returns { BaseResponseType }
    */
-  getUnreadMessageUserList( pageNum = 1, pageSize = 20, type = 2, diamond, pay ) {
-    let param = {query: {type}, pageSize, pageNum };
+  getUnreadMessageUserList(pageNum = 1, pageSize = 20, type = 2, diamond, pay) {
+    let param = { query: { type }, pageSize, pageNum };
     if (diamond) param.query.diamond = 1;
     if (pay) param.query.pay = 1;
     return axios.post('/api2/customer/msg/list', param);
   }
-  getAlreadyReadMessageUserList( pageNum = 1, pageSize = 20 ) {
-    return this.getUnreadMessageUserList( pageNum, pageSize, 3);
+  getAlreadyReadMessageUserList(pageNum = 1, pageSize = 20) {
+    return this.getUnreadMessageUserList(pageNum, pageSize, 3);
   }
 
   /**
@@ -67,7 +81,7 @@ class ServerUnit {
    * @param { {"query":{"relateUid":3901604053073969},"pageSize":20,"pageNum":1} } param 
    * @returns { Promise<{ status: Number, data: Message[]}> }
    */
-  getUserMessageDetail( param = {"query":{"relateUid":3901604053073969},"pageSize":20,"pageNum":1}){
+  getUserMessageDetail(param = { "query": { "relateUid": 3901604053073969 }, "pageSize": 20, "pageNum": 1 }) {
     return axios.post('/api2/message/user/detail/', param);
   }
 
@@ -80,7 +94,7 @@ class ServerUnit {
    */
   sendMessage(relateUid, content, messageType = 0) {
     if (config.no_send_msg) return;
-    let param = { relateUid, content, messageType};
+    let param = { relateUid, content, messageType };
     return axios.post('/api/message/send/', param);
   }
 
@@ -93,7 +107,7 @@ class ServerUnit {
    */
   sendMediaMessage(filename, relateUid, messageType) {
     if (config.no_send_msg) return;
-    let param = { filename, relateUid, messageType};
+    let param = { filename, relateUid, messageType };
     return axios.post('/api/uploadMedia/', param);
   }
 
@@ -102,7 +116,7 @@ class ServerUnit {
    * @param { String } uid
    * @returns { Promise<{ status: Number, data: { uid: String, createdAt: String, diamond: Number}}> }
    */
-  getUserProfile( uid ){
+  getUserProfile(uid) {
     return axios.post('/api/user/info/', { relateUid: uid });
   }
 
@@ -112,7 +126,7 @@ class ServerUnit {
    * @param { String } password 
    * @returns { BaseResponseType }
    */
-  login( username, password ){
+  login(username, password) {
     return 1;
   }
 }

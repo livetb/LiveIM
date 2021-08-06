@@ -1,7 +1,6 @@
 if (typeof Promise !== 'function') {
   alert('Your Browser Not Support Promise.')
 }
-
 import { UserList } from '../../components/UserList';
 import { ChatRoom } from '../../components/ChatRoom';
 import { Server } from '../../assets/js/unit/Server';
@@ -46,7 +45,8 @@ class ThePage {
     /**@type { {diamond: Boolean, star: Boolean} } */
     filter: {
       diamond: true,
-      star: true
+      star: true,
+      all: false,
     }
   }
 
@@ -59,7 +59,7 @@ class ThePage {
   userList;
   /**@type { ChatRoom } */
   chatRoom;
-  constructor(){
+  constructor() {
     this.userList = new UserList();
     this.chatRoom = new ChatRoom();
     this.config.filter = this.userList.config.filter;
@@ -71,39 +71,55 @@ class ThePage {
    */
   UserInfoMap = new Map();
 
-  init(){
+  init() {
     this.initView();
     this.getMessageUserList();
     this.bindListener();
     this.startMessageUserListTimer();
   }
-  
-  initView(){
-    if ( this.already.init.view ) return;
+
+  initView() {
+    if (this.already.init.view) return;
     let config = this.config;
     let parent = document.querySelector(config.parent_cssSelector);
     config.parent = parent;
     parent.appendChild(this.userList.getElement());
     parent.appendChild(this.chatRoom.getElement());
     this.already.init.view = true;
+    sessionStorage.setItem('filter', JSON.stringify(this.config.filter))
   }
 
-  async getMessageUserList( pageNum = 1 ){
-    let { status, data } = await Server.getUnreadMessageUserList(pageNum, undefined, undefined,
-       this.config.filter.diamond, this.config.filter.star);
-    if (status !== 0) return;
-    console.log('getMessageUserList: ', data);
-    data.sort((a, b) => {
-      return b.diamond - a.diamond;
-    });
-    data.forEach( user => {
-      user.uid = user.relateUid;
-      this.userList.appendUser(user);
-      this.UserInfoMap.set(user.uid, user);
-    });
+  async getMessageUserList(pageNum = 1) {
+    if (this.config.filter.all) {
+      let { status, data } = await Server.getAllUserList(pageNum, undefined, this.config.filter.diamond, this.config.filter.star);
+      if (status !== 0) return;
+      let records = data.records;
+      console.log('allUserList:', records);
+      records.sort((a, b) => {
+        return b.diamond - a.diamond;
+      })
+      records.forEach(user => {
+        user.id = user.Uid;
+        this.userList.appendUser(user);
+        this.UserInfoMap.set(user.uid, user);
+      })
+    } else {
+      let { status, data } = await Server.getUnreadMessageUserList(pageNum, undefined, undefined,
+        this.config.filter.diamond, this.config.filter.star);
+      if (status !== 0) return;
+      console.log('getMessageUserList: ', data);
+      data.sort((a, b) => {
+        return b.diamond - a.diamond;
+      });
+      data.forEach(user => {
+        user.uid = user.relateUid;
+        this.userList.appendUser(user);
+        this.UserInfoMap.set(user.uid, user);
+      });
+    }
   }
 
-  startMessageUserListTimer(){
+  startMessageUserListTimer() {
     let usp = new URLSearchParams(location.search);
     if (usp.get('timer') === 'on') {
       let sec = ~~usp.get('sec');
@@ -115,20 +131,28 @@ class ThePage {
     }
   }
 
-  bindListener(){
+  bindListener() {
     // 切换聊天用户
     this.userList.setListener('changed_user', (param) => {
       let { is_checked, user } = param;
-      if (is_checked) this.chatRoom.notifyUserChaned( user );
+      if (is_checked) this.chatRoom.notifyUserChaned(user);
     });
     // 更多未读消息用户列表
-    this.userList.setListener('more_list',() => {
-      this.getMessageUserList(this.config.pageNum.user_list++);
+    this.userList.setListener('more_list', () => {
+      let sessionFilter = sessionStorage.getItem('filter');
+      let filterStr = JSON.stringify(this.config.filter);
+      if (sessionFilter === filterStr) {
+        this.getMessageUserList(this.config.pageNum.user_list++);
+      }else{
+        sessionStorage.setItem('filter',JSON.stringify(this.config.filter));
+        this.config.pageNum.user_list=2;
+        this.getMessageUserList(1);
+      }
     });
     // 检测页面是否可见
     document.addEventListener('visibilitychange', () => {
       let visible = document.visibilityState;
-      this.config.page_visible === ( visible === "visible");
+      this.config.page_visible === (visible === "visible");
     });
     // 筛选用户类型
     this.userList.setListener('filter_diamond', (param) => {
@@ -137,6 +161,9 @@ class ThePage {
     this.userList.setListener('filter_star', (param) => {
       let { is_checked } = param;
     });
+    this.userList.setListener('filter_all', (param) => {
+      let { is_checked } = param;
+    })
   }
 }
 

@@ -30,7 +30,7 @@ body {
   position: relative;
 }
 
-.rectangle-box>* {
+.rectangle-box > * {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -78,9 +78,9 @@ body {
   margin-right: 10px;
 }
 
-.user-list .filter-grid input[name='filter-diamond']+span,
-.user-list .filter-grid input[name='filter-star']+span,
-.user-list .filter-grid input[name='filter-all']+span {
+.user-list .filter-grid input[name='filter-diamond'] + span,
+.user-list .filter-grid input[name='filter-star'] + span,
+.user-list .filter-grid input[name='filter-all'] + span {
   font-size: 18px;
 }
 
@@ -96,7 +96,7 @@ body {
   display: none;
 }
 
-.user-list input[name='list-user']:checked+.user {
+.user-list input[name='list-user']:checked + .user {
   background: #e9e9e9;
 }
 
@@ -105,8 +105,7 @@ body {
   cursor: pointer;
 }
 
-.user-list .user-wrap.no-diamond,
-.user-list .user-wrap.no-star {
+.user-list .user-wrap.no-diamond, .user-list .user-wrap.no-star {
   display: none;
 }
 
@@ -119,7 +118,7 @@ body {
   transition: all 0.4s ease-in-out;
 }
 
-.user-list .user-wrap .user>* {
+.user-list .user-wrap .user > * {
   height: 50px;
 }
 
@@ -149,7 +148,7 @@ body {
   width: 50px;
 }
 
-.user-list .user-wrap .user .avatar-wrap .rectangle-box.square .avatar.no1>img {
+.user-list .user-wrap .user .avatar-wrap .rectangle-box.square .avatar.no1 > img {
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -219,8 +218,7 @@ body {
   cursor: pointer;
 }
 
-.user-list .more-list-wrap .more-list,
-.user-list .more-list-wrap .more-list:focus {
+.user-list .more-list-wrap .more-list, .user-list .more-list-wrap .more-list:focus {
   border: none;
   outline: none;
 }
@@ -236,13 +234,13 @@ body {
   border-bottom: 1px solid #000;
 }
 
-.chat-room .user-profile-wrap>* {
+.chat-room .user-profile-wrap > * {
   margin: 0;
   display: inline-block;
   padding: 10px;
 }
 
-.chat-room .user-profile-wrap>*+* {
+.chat-room .user-profile-wrap > * + * {
   border-left: 1px solid #000;
 }
 
@@ -278,7 +276,7 @@ body {
   width: 50px;
 }
 
-.chat-room .chat-record-list .chat-record .avatar-wrap .rectangle-box.square .avatar.no1>img {
+.chat-room .chat-record-list .chat-record .avatar-wrap .rectangle-box.square .avatar.no1 > img {
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -299,7 +297,7 @@ body {
   display: inline-block;
 }
 
-.chat-room .chat-record-list .chat-record .message-wrap .info .item+.item {
+.chat-room .chat-record-list .chat-record .message-wrap .info .item + .item {
   font-size: 12px;
   color: #666;
   margin-left: 10px;
@@ -337,7 +335,7 @@ body {
   display: none;
 }
 
-.chat-room .fast-message-list-wrap input[type='checkbox']+.switch {
+.chat-room .fast-message-list-wrap input[type='checkbox'] + .switch {
   display: inline-block;
   height: 30px;
   margin: 0;
@@ -348,11 +346,11 @@ body {
   cursor: pointer;
 }
 
-.chat-room .fast-message-list-wrap input[type='checkbox']+.switch>* {
+.chat-room .fast-message-list-wrap input[type='checkbox'] + .switch > * {
   margin: 0;
 }
 
-.chat-room .fast-message-list-wrap input[type='checkbox']+.switch>p::before {
+.chat-room .fast-message-list-wrap input[type='checkbox'] + .switch > p::before {
   content: '- close fast message';
   display: inline-block;
   font-size: 16px;
@@ -360,15 +358,15 @@ body {
   font-weight: bold;
 }
 
-.chat-room .fast-message-list-wrap input[type='checkbox']:checked+.switch {
+.chat-room .fast-message-list-wrap input[type='checkbox']:checked + .switch {
   background: skyblue;
 }
 
-.chat-room .fast-message-list-wrap input[type='checkbox']:checked+.switch>p::before {
+.chat-room .fast-message-list-wrap input[type='checkbox']:checked + .switch > p::before {
   content: '+ open fast message';
 }
 
-.chat-room .fast-message-list-wrap input[type='checkbox']:checked+.switch+.fast-message-list {
+.chat-room .fast-message-list-wrap input[type='checkbox']:checked + .switch + .fast-message-list {
   max-height: 0px;
 }
 
@@ -386,7 +384,7 @@ body {
   border-right: 1px solid #000;
 }
 
-.chat-room .fast-message-list-wrap .fast-message-list .text-list>.item {
+.chat-room .fast-message-list-wrap .fast-message-list .text-list > .item {
   margin: 0;
   font-size: 16px;
   padding: 5px 10px;
@@ -396,7 +394,7 @@ body {
   cursor: pointer;
 }
 
-.chat-room .fast-message-list-wrap .fast-message-list .text-list>.item:nth-child(even) {
+.chat-room .fast-message-list-wrap .fast-message-list .text-list > .item:nth-child(even) {
   background: #DDD;
 }
 
@@ -407,7 +405,7 @@ body {
   gap: 10px;
 }
 
-.chat-room .fast-message-list-wrap .fast-message-list .image-list>img.item {
+.chat-room .fast-message-list-wrap .fast-message-list .image-list > img.item {
   width: 100%;
   object-fit: cover;
   max-width: 100%;
@@ -415,7 +413,7 @@ body {
   cursor: pointer;
 }
 
-.chat-room .fast-message-list-wrap .fast-message-list .image-list>img.item:hover+.preview {
+.chat-room .fast-message-list-wrap .fast-message-list .image-list > img.item:hover + .preview {
   max-width: 500px;
   max-height: 500px;
   object-fit: contain;
@@ -423,7 +421,7 @@ body {
   z-index: 9;
 }
 
-.chat-room .fast-message-list-wrap .fast-message-list .image-list>img.preview {
+.chat-room .fast-message-list-wrap .fast-message-list .image-list > img.preview {
   position: fixed;
   z-index: 0;
   top: 0;
@@ -441,16 +439,16 @@ body {
   display: grid;
 }
 
-.chat-room .send-message-wrap>* {
+.chat-room .send-message-wrap > * {
   width: 100%;
   overflow: hidden;
 }
 
-.chat-room .send-message-wrap>*:nth-child(1) {
+.chat-room .send-message-wrap > *:nth-child(1) {
   height: 70px;
 }
 
-.chat-room .send-message-wrap>*:nth-child(2) {
+.chat-room .send-message-wrap > *:nth-child(2) {
   height: 50px;
 }
 
@@ -458,8 +456,7 @@ body {
   padding: 5px 15px;
 }
 
-.chat-room .send-message-wrap .input-wrap .text-input,
-.chat-room .send-message-wrap .input-wrap .text-input:focus {
+.chat-room .send-message-wrap .input-wrap .text-input, .chat-room .send-message-wrap .input-wrap .text-input:focus {
   overflow: hidden;
   width: 100%;
   height: 100%;
@@ -490,13 +487,12 @@ body {
   cursor: pointer;
 }
 
-.chat-room .send-message-wrap .button-wrap .button,
-.chat-room .send-message-wrap .button-wrap .button:focus {
+.chat-room .send-message-wrap .button-wrap .button, .chat-room .send-message-wrap .button-wrap .button:focus {
   outline: none;
   border: none;
 }
 
-.chat-room .send-message-wrap .button-wrap>*+* {
+.chat-room .send-message-wrap .button-wrap > * + * {
   margin-left: 20px;
 }
 

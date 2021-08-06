@@ -7,9 +7,9 @@ class UserList {
    * @type {{
    *  id: String, classList: String[], ele: HTMLElement,
    *  more_list_wrap: HTMLElement, more_list: HTMLElement,
-   *  filter_diamond: HTMLElement, filter_star: HTMLElement,
+   *  filter_diamond: HTMLElement, filter_star: HTMLElement,filter_all:HTMLElement,
    *  filter: {
-   *    diamond: Boolean, star: Boolean
+   *    diamond: Boolean, star: Boolean,all:Boolean,
    *  }
    * }}
    */
@@ -19,11 +19,14 @@ class UserList {
     ele: null,
     more_list_wrap: null,
     more_list: null,
+    filter_grid:null,
     filter_diamond: null,
     filter_star: null,
+    filter_all: null,
     filter: {
       diamond: true,
       star: true,
+      all: false,
     }
   }
   /**
@@ -41,18 +44,18 @@ class UserList {
     more_list: null
   }
 
-  constructor(id, classList){
+  constructor(id, classList) {
     if (typeof id === 'string') this.config.id = id;
     if (Array.isArray(classList)) this.config.classList.push(...classList);
     this.init();
   }
 
-  init(){
+  init() {
     this.initView();
     this.bindListener();
   }
 
-  initView(){
+  initView() {
     let config = this.config;
     let ele = config.ele;
     if (ele) return;
@@ -70,6 +73,10 @@ class UserList {
         <input type="checkbox" ${config.filter.star ? 'checked' : ''} name="filter-star" />
         <span>有消费</span>
       </label>
+      <label class="filter">
+        <input type="checkbox" ${config.filter.all ? 'checked' : ''} name="filter-all" />
+        <span>所有</span>
+      </label>
     </div>
     <div class="more-list-wrap">
       <button class="more-list">more</button>
@@ -79,9 +86,11 @@ class UserList {
     config.more_list = ele.querySelector('.more-list');
     config.filter_diamond = ele.querySelector('input[name="filter-diamond"]');
     config.filter_star = ele.querySelector('input[name="filter-star"]');
+    config.filter_all = ele.querySelector('input[name="filter-all"]');
+    config.filter_grid=ele.querySelector('.filter-grid');
   }
 
-  bindListener(){
+  bindListener() {
     // let that = this;
     let moreListener = (() => {
       let timer;
@@ -90,20 +99,27 @@ class UserList {
         if (!flag) return;
         flag = false;
         this.notifyListener('more_list');
-        if(timer) clearTimeout(timer);
+        if (timer) clearTimeout(timer);
         timer = setInterval(() => {
           flag = true;
         }, 2000);
       }
     })();
-    this.config.more_list.addEventListener('click', function(){
+    this.config.more_list.addEventListener('click', function () {
       moreListener(this);
     });
     // filter
+    this.config.filter_grid.addEventListener('click',function(e){
+      
+      
+    })
     this.config.filter_diamond.addEventListener('change', () => {
       let is_checked = this.config.filter_diamond.checked;
       this.config.filter.diamond = is_checked;
-      this.notifyListener('filter_diamond', {is_checked});
+      // if(this.config.filter.diamond){
+      //   this.config.filter_all.checked=false;
+      // }
+      this.notifyListener('filter_diamond', { is_checked });
       // this.UserMap.forEach( user => {
       //   if (this.config.filter.diamond && this.config.filter.star) {
       //     user.user_wrap.show('', true);
@@ -115,7 +131,10 @@ class UserList {
     this.config.filter_star.addEventListener('change', () => {
       let is_checked = this.config.filter_star.checked;
       this.config.filter.star = is_checked;
-      this.notifyListener('filter_star', {is_checked});
+      // if(this.config.filter.star){
+      //   this.config.filter_all.checked=false;
+      // }
+      this.notifyListener('filter_star', { is_checked });
       // this.UserMap.forEach( user => {
       //   if (this.config.filter.diamond && this.config.filter.star) {
       //     user.user_wrap.show('', true);
@@ -124,16 +143,25 @@ class UserList {
       //   is_checked ? user.user_wrap.hide('star') : user.user_wrap.show('star');
       // });
     });
+    this.config.filter_all.addEventListener('change', () => {
+      let is_checked = this.config.filter_all.checked;
+      this.config.filter.all = is_checked;
+      // if (this.config.filter.all) {
+      //   this.config.filter_diamond.checked = false;
+      //   this.config.filter_star.checked = false;
+      // }
+      this.notifyListener('filter_all', { is_checked });
+    });
   }
 
-  getElement(){
+  getElement() {
     return this.config.ele;
   }
 
   /**
    * @param { UserInfo } user 
    */
-  appendUser( user ) {
+  appendUser(user) {
     if (ObjectUnit.isEmptyObject(user)) return;
     let cur = this.UserMap.get(user.uid);
     if (!cur) {
@@ -141,7 +169,7 @@ class UserList {
         created_time: Date.now(),
         user: user
       }
-      cur.user_wrap =  new UserWrap(user);
+      cur.user_wrap = new UserWrap(user);
       cur.user_wrap.setListener('selected', (param) => {
         this.UserMap.get(user.uid).user_wrap.updateBadge(0);
         if (!param.is_checked) return;
@@ -165,18 +193,19 @@ class UserList {
   }
 
   /**
-   * @param { 'changed_user' | 'more_list' | 'filter_diamond' | 'filter_star' } event_name 
+   * @param { 'changed_user' | 'more_list' | 'filter_diamond' | 'filter_star' | 'filter_all' } event_name 
    * @param { Function({ is_checked: Boolean, uid: String }) } callback 
    */
-  setListener( event_name, callback ) {
+  setListener(event_name, callback) {
     this.on[event_name] = callback;
   }
   /**
-   * @param { 'changed_user' | 'more_list' | 'filter_diamond' | 'filter_star' } event_name 
+   * @param { 'changed_user' | 'more_list' | 'filter_diamond' | 'filter_star' | 'filter_all' } event_name 
    * @param { Function({ is_checked: Boolean, user: UserInfo }) } param 
    */
-  notifyListener( event_name, param ) {
+  notifyListener(event_name, param) {
     let callback = this.on[event_name];
+    console.log(callback);
     if (typeof callback === 'function') callback(param);
   }
 }
