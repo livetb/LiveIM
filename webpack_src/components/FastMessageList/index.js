@@ -69,6 +69,7 @@ class FastMessageList {
       `Hello, I am Emily, anything I can help?
 
       :)`,
+      'Please provide the screenshot of purchase receipt sent by Apple. You may find it in your email.'
     ];
     let listHTML = [];
     arr.forEach( text => {
