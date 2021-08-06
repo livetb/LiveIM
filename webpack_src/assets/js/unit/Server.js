@@ -39,8 +39,7 @@ class ServerUnit {
    * @returns { Promise<{ status: Number, data: UserInfo[]}> }
    */
   getMessageUserList(param = { "query": {}, "pageSize": 20, "pageNum": 1 }) {
-    // return axios.post('/api2/message/user/list/', param);
-    return axios.post('/api/user/list', param);
+    return axios.post('/api2/message/user/list/', param);
   }
   /** 
    * 获取全部用户列表
@@ -55,7 +54,7 @@ class ServerUnit {
     let param = { query: {}, pageSize, pageNum };
     if (diamond) param.query.diamond = 1;
     if (pay) param.query.pay = 1;
-    return axios.post('/api/user/list', param);
+    return axios.post('/api2/user/list5', param);
   }
   /**
    * 获取未读消息列表
