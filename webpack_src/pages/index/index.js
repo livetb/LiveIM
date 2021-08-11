@@ -95,9 +95,6 @@ class ThePage {
       if (status !== 0) return;
       let records = data.records;
       console.log('allUserList:', records);
-      records.sort((a, b) => {
-        return b.diamond - a.diamond;
-      })
       records.forEach(user => {
         user.id = user.Uid;
         this.userList.appendUser(user);

@@ -54,6 +54,7 @@ class ServerUnit {
     let param = { query: {}, pageSize, pageNum };
     if (diamond) param.query.diamond = 1;
     if (pay) param.query.pay = 1;
+    // param.query.online=1;
     return axios.post('/api2/user/list5', param);
   }
   /**

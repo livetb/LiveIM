@@ -46,7 +46,7 @@ class UserWrap {
 
   renderDiamondStar(diamond, star){
     if (diamond<1 && star < 1) return '';
-    return `<p class="diamond-and-star">dimond: ${diamond} / consume: ${star}</p>`;
+    return `<p class="diamond-and-star">diamond: ${diamond} / consume: ${star}</p>`;
   }
 
   initView(){
